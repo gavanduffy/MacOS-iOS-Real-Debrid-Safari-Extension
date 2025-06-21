@@ -16,17 +16,17 @@ jobs:
       - name: Get commit SHA
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: Build
-        run: xcodebuild -scheme MacOS-iOS-Real-Debrid-Safari-Extension -configuration Release archive -archivePath build/MacOS-iOS-Real-Debrid-Safari-Extension.xcarchive CODE_SIGN_IDENTITY= CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+        run: xcodebuild -scheme Real-Debrid -configuration Release archive -archivePath build/Real-Debrid.xcarchive CODE_SIGN_IDENTITY= CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
         env:
           IS_NIGHTLY: YES
       - name: Package ipa
         run: |
           mkdir Payload
-          cp -r build/MacOS-iOS-Real-Debrid-Safari-Extension.xcarchive/Products/Applications/MacOS-iOS-Real-Debrid-Safari-Extension.app Payload
-          zip -r AetherVoice-${{ env.sha_short }}.ipa Payload
+          cp -r build/MacOS-iOS-Real-Debrid-Safari-Extension.xcarchive/Products/Applications/Real-Debrid.app Payload
+          zip -r Real-Debrid-${{ env.sha_short }}.ipa Payload
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: MacOS-iOS-Real-Debrid-Safari-Extension-${{ env.sha_short }}.ipa
-          path: MacOS-iOS-Real-Debrid-Safari-Extension-${{ env.sha_short }}.ipa
+          name: Real-Debrid-${{ env.sha_short }}.ipa
+          path: Real-Debrid-${{ env.sha_short }}.ipa
           if-no-files-found: error
